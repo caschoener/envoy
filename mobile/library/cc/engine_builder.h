@@ -117,6 +117,10 @@ public:
 
   EngineSharedPtr build();
 
+protected:
+  EngineCallbacksSharedPtr callbacks_;
+  LogLevel log_level_ = LogLevel::info;
+
 private:
   struct NativeFilterConfig {
     NativeFilterConfig(std::string name, std::string typed_config)
@@ -125,9 +129,6 @@ private:
     std::string name_;
     std::string typed_config_;
   };
-
-  LogLevel log_level_ = LogLevel::info;
-  EngineCallbacksSharedPtr callbacks_;
 
   std::string stats_domain_;
   int connect_timeout_seconds_ = 30;

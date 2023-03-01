@@ -169,5 +169,6 @@ envoy_cc_test_library(
     repository = "@envoy",
     deps = [
         "//library/cc:engine_builder_lib",
+        "//library/common:envoy_main_interface_lib_no_stamp",
     ],
 )
