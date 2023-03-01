@@ -86,7 +86,7 @@ void sendRequest(Platform::EngineSharedPtr engine, Status& status,
 
 void sendRequestEndToEnd() {
   TestEngineBuilder engine_builder;
-  Platform::EngineSharedPtr engine = engine_builder.createEngine(CONFIG);
+  Platform::EngineSharedPtr engine = engine_builder.buildWithString(CONFIG, true);
 
   Status status;
   absl::Notification stream_complete;

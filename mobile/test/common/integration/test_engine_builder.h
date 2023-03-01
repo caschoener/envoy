@@ -3,21 +3,22 @@
 #include "library/cc/engine_builder.h"
 
 namespace Envoy {
+namespace Platform {
 
-// A wrapper class around EngineBuilder, specifically for mobile tests.
+// An extension to the EngineBuilder class to be used only for tests.
 //
-// Mobile tests often supply their own YAML configuration for convenience, instead of using the
-// EngineBuilder APIs. This wrapper class builds an Envoy Mobile Engine with the ability to
-// access setOverrideConfigForTests(), which is a protected method inside EngineBuilder.
-class TestEngineBuilder : public Platform::EngineBuilder {
-public:
-  // Creates an Envoy Engine from the provided config and waits until the engine is running before
-  // returning the Engine as a shared_ptr.
-  Platform::EngineSharedPtr createEngine(std::string config);
+// Most tests should use the EngineBuilder to edit the engine config with builder APIs.
+// This class adds additional functionality to build from a fully custom yaml.
+class TestEngineBuilder : EngineBuilder {
+  using EngineBuilder::EngineBuilder;
 
-  // Overrides the EngineBuilder's config with the provided string. Calls to the EngineBuilder's
-  // bootstrap modifying APIs do not take effect after this function is called.
-  void setOverrideConfig(std::string config);
+public:
+  // Creates an Envoy Engine from the provided config string and optionally waits
+  // until the engine is running before returning the Engine as a shared_ptr.
+  EngineSharedPtr buildWithString(std::string config, bool block_until_running = false);
+
+private:
 };
 
+} // namespace Platform
 } // namespace Envoy
